@@ -1,26 +1,16 @@
 from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
+from project.payments.services.order_service import OrderService
 
 
 class OrderView(APIView):
     def get(self, request):
-        # Your logic for handling GET requests goes here
-        return Response("GET request received", status=status.HTTP_200_OK)
+        return OrderService.read_order(request.query_params.get("order_id"))
 
     def post(self, request):
-        # Your logic for handling POST requests goes here
-        return Response("POST request received", status=status.HTTP_201_CREATED)
+        return OrderService.create_order(request.data)
 
     def put(self, request, pk):
-        # Your logic for handling PUT requests goes here
-        return Response(
-            f"PUT request received for order with id {pk}", status=status.HTTP_200_OK
-        )
+        return OrderService.update_order(pk, request.data)
 
     def delete(self, request, pk):
-        # Your logic for handling DELETE requests goes here
-        return Response(
-            f"DELETE request received for order with id {pk}",
-            status=status.HTTP_204_NO_CONTENT,
-        )
+        return OrderService.delete_order(pk)
