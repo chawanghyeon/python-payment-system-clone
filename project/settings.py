@@ -107,6 +107,7 @@ DATABASES = {
         "PORT": "5435",
     },
 }
+NUM_SHARDS = len(DATABASES)
 
 
 # Password validation
