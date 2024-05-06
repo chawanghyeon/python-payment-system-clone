@@ -7,7 +7,7 @@ class OrderView(APIView):
         return OrderService.read_order(request.query_params.get("order_id"))
 
     def post(self, request):
-        return OrderService.create_order(request.data)
+        return OrderService.create_order(request.user.id, request.data)
 
     def put(self, request, pk):
         return OrderService.update_order(pk, request.data)

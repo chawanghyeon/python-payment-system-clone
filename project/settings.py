@@ -74,7 +74,7 @@ WSGI_APPLICATION = "project.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    "db_shard_0": {
+    "shard_0": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "mydatabase",
         "USER": "myuser",
@@ -82,7 +82,7 @@ DATABASES = {
         "HOST": "localhost",
         "PORT": "5432",
     },
-    "db_shard_1": {
+    "shard_1": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "mydatabase_shard_1",
         "USER": "myuser",
@@ -90,7 +90,7 @@ DATABASES = {
         "HOST": "localhost",
         "PORT": "5433",
     },
-    "db_shard_2": {
+    "shard_2": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "mydatabase_shard_1",
         "USER": "myuser",
@@ -98,7 +98,7 @@ DATABASES = {
         "HOST": "localhost",
         "PORT": "5434",
     },
-    "db_shard_3": {
+    "shard_3": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "mydatabase_shard_1",
         "USER": "myuser",
@@ -107,8 +107,10 @@ DATABASES = {
         "PORT": "5435",
     },
 }
-NUM_SHARDS = len(DATABASES)
 
+DATABASE_ROUTERS = ["project.payments.utils.sharding_router.ShardingRouter"]
+
+NUM_SHARDS = len(DATABASES)
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

@@ -1,12 +1,23 @@
+import threading
+
+
 class ShardingContextHolder:
-    def __init__(self):
-        self._sharding_context = None
+    _context_holder = threading.local()
 
-    def set_sharding_context(self, sharding_context):
-        self._sharding_context = sharding_context
+    @classmethod
+    def set_sharding_context(cls, shard_key: str, shard_lookup_key: dict):
+        cls._context_holder.sharding_context = {
+            "shard_key": shard_key,
+            "shard_lookup_key": shard_lookup_key,
+        }
 
-    def get_sharding_context(self):
-        return self._sharding_context
+    @classmethod
+    def get_shard_lookup_key(cls):
+        if hasattr(cls._context_holder, "sharding_context"):
+            return cls._context_holder.sharding_context.get("shard_lookup_key")
+        return None
 
-    def clear_context(self):
-        self._sharding_context = None
+    @classmethod
+    def clear_context(cls):
+        if hasattr(cls._context_holder, "sharding_context"):
+            del cls._context_holder.sharding_context
