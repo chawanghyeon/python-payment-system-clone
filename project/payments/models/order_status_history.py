@@ -1,4 +1,5 @@
 from django.db import models
+from project.payments.models.order import Order
 
 
 class OrderStatusHistory(models.Model):
@@ -10,5 +11,8 @@ class OrderStatusHistory(models.Model):
     :type timestamp: datetime.datetime
     """
 
+    order = models.ForeignKey(
+        Order, on_delete=models.CASCADE, related_name="status_histories"
+    )
     status = models.CharField(max_length=50)
     timestamp = models.DateTimeField(auto_now_add=True)

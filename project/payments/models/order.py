@@ -45,9 +45,6 @@ class Order(models.Model):
     arrive_datetime = models.DateTimeField()
     order_pay_method = models.ForeignKey(OrderPayMethod, on_delete=models.SET_NULL)
     order_memo = models.ForeignKey(OrderMemo, on_delete=models.SET_NULL)
-    order_status_history = models.ForeignKey(
-        OrderStatusHistory, on_delete=models.SET_NULL
-    )
     delivery = models.ForeignKey(Delivery, on_delete=models.SET_NULL)
     line_items = models.ManyToManyField(LineItem)
     seller_summary = models.ForeignKey(SellerSummary, on_delete=models.SET_NULL)
