@@ -17,13 +17,13 @@ class OrderService:
 
     @classmethod
     @sharding_target
-    def create_order(cls, user_id, data) -> None:
+    def create_order(cls, data, user_id) -> None:
         serializer = OrderRequestSerializer(data=data)
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_201_CREATED)
 
     @classmethod
     @sharding_target
