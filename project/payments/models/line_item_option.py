@@ -16,4 +16,4 @@ class LineItemOption(models.Model):
 
     lineitem = models.ForeignKey(LineItem, on_delete=models.CASCADE)
     option_name = models.CharField(max_length=255)
-    extra_cost = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    extra_cost = models.IntegerField()

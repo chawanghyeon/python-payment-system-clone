@@ -1,6 +1,5 @@
 from django.db import models
 
-from project.payments.models.user import User
 from project.payments.models.seller_summary import SellerSummary
 from project.payments.models.charge_line import ChargeLine
 from project.payments.models.order_pay_method import OrderPayMethod
@@ -13,8 +12,8 @@ from project.payments.models.line_item import LineItem
 class Order(models.Model):
     """주문 모델입니다.
 
-    :param user: 주문을 한 사용자
-    :type user: User
+    :param user_id: 주문을 한 사용자
+    :type user_id: int
     :param total_amount: 주문의 총 금액
     :type total_amount: DecimalField
     :param order_datetime: 주문이 생성된 일시
@@ -39,8 +38,8 @@ class Order(models.Model):
     :type charge_lines: ManyToManyField(ChargeLine)
     """
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    total_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    user_id = models.BigIntegerField()
+    total_amount = models.IntegerField()
     order_datetime = models.DateTimeField(auto_now_add=True)
     accept_datetime = models.DateTimeField()
     arrive_datetime = models.DateTimeField()

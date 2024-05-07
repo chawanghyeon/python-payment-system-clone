@@ -16,5 +16,5 @@ class LineItem(models.Model):
 
     item_name = models.CharField(max_length=255)
     quantity = models.PositiveIntegerField(default=1)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.IntegerField()
     lineitem_options = models.ManyToManyField("LineItemOption")

@@ -8,4 +8,4 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
             return True
 
         # 요청자(request.user)가 객체의 user와 동일한지 확인
-        return obj.user == request.user
+        return obj.user_id == request.data.get("user_id")
