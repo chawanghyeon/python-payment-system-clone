@@ -11,9 +11,9 @@ from rest_framework.response import Response
 
 class OrderService:
     @staticmethod
-    def read_order(order_id: int) -> Order:
+    def read_order(user_id: int, order_id: int) -> Order:
         mongo_db_manager = MongoDbManager()
-        order = mongo_db_manager.get_order_from_collection(order_id)
+        order = mongo_db_manager.get_order_from_collection(user_id, order_id)
 
         if not order:
             return Response(
@@ -39,7 +39,7 @@ class OrderService:
 
     @staticmethod
     @sharding_target
-    def update_order(order_id: int, data: dict) -> None:
+    def update_order(user_id: int, order_id: int, data: dict) -> None:
         try:
             order = Order.objects.get(id=order_id)
         except Order.DoesNotExist:
@@ -59,7 +59,7 @@ class OrderService:
 
     @staticmethod
     @sharding_target
-    def delete_order(order_id: int) -> None:
+    def delete_order(user_id: int, order_id: int) -> None:
         try:
             order = Order.objects.get(id=order_id)
         except Order.DoesNotExist:
