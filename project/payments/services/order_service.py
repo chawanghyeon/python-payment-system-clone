@@ -13,12 +13,17 @@ class OrderService:
     @staticmethod
     def read_order(user_id: int, order_id: int) -> Order:
         mongo_db_manager = MongoDbManager()
-        order = mongo_db_manager.get_order_from_collection(user_id, order_id)
-
-        if not order:
+        try:
+            order = mongo_db_manager.get_order(user_id, order_id)
+        except Order.DoesNotExist:
             return Response(
                 {"error": f"Order with id {order_id} does not exist"},
                 status=status.HTTP_404_NOT_FOUND,
+            )
+        except Exception as e:
+            return Response(
+                {"error": f"An error occurred: {str(e)}"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
 
         serializer = OrderResponseSerializer(order)
