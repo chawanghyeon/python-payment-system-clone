@@ -1,8 +1,7 @@
-from project.settings import NUM_SHARDS, DATABASES
+from project.settings import NUM_SHARDS
 
 
 class ShardLookupKeyDetermineService:
     @staticmethod
-    def determine_shard(user_id: int) -> dict | None:
-        shard_key = user_id % NUM_SHARDS
-        return DATABASES.get(f"shard_{shard_key}")
+    def determine_shard(order_no: str) -> int:
+        return hash(order_no) % NUM_SHARDS

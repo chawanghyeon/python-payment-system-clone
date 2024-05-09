@@ -16,9 +16,9 @@ from project.payments.utils.try_except_decorator import try_except
 class OrderService:
     @staticmethod
     @try_except
-    def read_order(user_id: int, order_id: int) -> Order:
+    def read_order(user_id: int, order_no: str) -> Order:
         mongo_db_manager = MongoDbManager()
-        order = mongo_db_manager.get_order(user_id, order_id)
+        order = mongo_db_manager.get_order(user_id, order_no)
 
         serializer = OrderReadSerializer(order)
         serializer.is_valid(raise_exception=True)
@@ -28,7 +28,7 @@ class OrderService:
     @staticmethod
     @sharding_target
     @try_except
-    def create_order(user_id: int, data: dict) -> None:
+    def create_order(data: dict) -> None:
         serializer = OrderCreateSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
@@ -38,7 +38,7 @@ class OrderService:
     @staticmethod
     @sharding_target
     @try_except
-    def update_order(user_id: int, order_id: int, data: dict) -> None:
+    def update_order(order_id: int, data: dict, order_no: str) -> None:
         order = Order.objects.get(id=order_id)
         serializer = OrderUpdateSerializer(order, data=data, partial=True)
         serializer.is_valid(raise_exception=True)
@@ -49,8 +49,8 @@ class OrderService:
     @staticmethod
     @sharding_target
     @try_except
-    def delete_order(user_id: int, order_id: int) -> None:
-        order = Order.objects.get(id=order_id)
+    def delete_order(order_id: int, user_id: int, order_no: str) -> None:
+        order = Order.objects.get(id=order_id, user_id=user_id)
         order.delete()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
