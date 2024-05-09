@@ -40,3 +40,16 @@ mongo_db_data_example = {
         "isGroupOrder": false,
     },
 }
+
+json_data_example = {
+    "orderNo": "202107010001",
+    "orderStatus": "ACCEPTED",
+    "orderDatetime": "2021-07-01 10:00:00",
+    "orderPayMethod": {},
+    "orderMemo": {},
+    "orderStatusHistory": [],
+    "delivery": {},
+    "lineItems": [],
+    "sellerSummary": {},
+    "chargeLines": [],
+}

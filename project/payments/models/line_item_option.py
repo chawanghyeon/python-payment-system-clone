@@ -11,9 +11,9 @@ class LineItemOption(models.Model):
     :param option_name: 옵션의 이름
     :type option_name: str
     :param extra_cost: 추가 비용
-    :type extra_cost: Decimal
+    :type extra_cost: int
     """
 
-    lineitem = models.ForeignKey(LineItem, on_delete=models.CASCADE)
+    line_item = models.ForeignKey(LineItem, on_delete=models.CASCADE)
     option_name = models.CharField(max_length=255)
     extra_cost = models.IntegerField()
