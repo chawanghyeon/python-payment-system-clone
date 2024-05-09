@@ -8,72 +8,49 @@ from project.payments.serializers.order import (
 )
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.exceptions import ValidationError
+
+from project.payments.utils.try_except_decorator import try_except
 
 
 class OrderService:
     @staticmethod
+    @try_except
     def read_order(user_id: int, order_id: int) -> Order:
         mongo_db_manager = MongoDbManager()
-        try:
-            order = mongo_db_manager.get_order(user_id, order_id)
-        except Order.DoesNotExist:
-            return Response(
-                {"error": f"Order with id {order_id} does not exist"},
-                status=status.HTTP_404_NOT_FOUND,
-            )
-        except Exception as e:
-            return Response(
-                {"error": f"An error occurred: {str(e)}"},
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            )
+        order = mongo_db_manager.get_order(user_id, order_id)
 
         serializer = OrderReadSerializer(order)
-        if not serializer.is_valid():
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer.is_valid(raise_exception=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     @staticmethod
     @sharding_target
+    @try_except
     def create_order(user_id: int, data: dict) -> None:
         serializer = OrderCreateSerializer(data=data)
-        if not serializer.is_valid():
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+        serializer.is_valid(raise_exception=True)
         serializer.save()
+
         return Response(status=status.HTTP_201_CREATED)
 
     @staticmethod
     @sharding_target
+    @try_except
     def update_order(user_id: int, order_id: int, data: dict) -> None:
-        try:
-            order = Order.objects.get(id=order_id)
-        except Order.DoesNotExist:
-            return Response(
-                {"error": f"Order with id {order_id} does not exist"},
-                status=status.HTTP_404_NOT_FOUND,
-            )
-
+        order = Order.objects.get(id=order_id)
         serializer = OrderUpdateSerializer(order, data=data, partial=True)
-
-        if not serializer.is_valid():
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+        serializer.is_valid(raise_exception=True)
         serializer.save()
 
         return Response(status=status.HTTP_200_OK)
 
     @staticmethod
     @sharding_target
+    @try_except
     def delete_order(user_id: int, order_id: int) -> None:
-        try:
-            order = Order.objects.get(id=order_id)
-        except Order.DoesNotExist:
-            return Response(
-                {"error": f"Order with id {order_id} does not exist"},
-                status=status.HTTP_404_NOT_FOUND,
-            )
-
+        order = Order.objects.get(id=order_id)
         order.delete()
 
         return Response(status=status.HTTP_204_NO_CONTENT)
