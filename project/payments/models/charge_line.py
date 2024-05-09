@@ -14,6 +14,22 @@ class ChargeLine(models.Model):
     :type amount: int
     """
 
+    class Status:
+        SHIPPING = "SHIPPING"
+        PRODUCT = "PRODUCT"
+        DISCOUNT = "DISCOUNT"
+        TAX = "TAX"
+        ETC = "ETC"
+
+    status_choices = [
+        (Status.SHIPPING, "배송비"),
+        (Status.PRODUCT, "상품"),
+        (Status.DISCOUNT, "할인"),
+        (Status.TAX, "부가세"),
+        (Status.ETC, "기타"),
+    ]
+
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     description = models.CharField(max_length=255)
     amount = models.IntegerField()
+    status = models.CharField(max_length=50, choices=status_choices)
