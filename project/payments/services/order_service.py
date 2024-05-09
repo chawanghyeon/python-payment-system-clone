@@ -1,9 +1,9 @@
 from project.payments.models.order import Order
 from project.payments.utils.mongodb_manager import MongoDbManager
 from project.payments.utils.sharding_target_decorator import sharding_target
-from project.payments.schemas.order import (
-    OrderRequestSerializer,
-    OrderResponseSerializer,
+from project.payments.serializers.order import (
+    OrderCreateSerializer,
+    OrderReadSerializer,
 )
 from rest_framework import status
 from rest_framework.response import Response
@@ -26,7 +26,7 @@ class OrderService:
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
 
-        serializer = OrderResponseSerializer(order)
+        serializer = OrderReadSerializer(order)
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -35,7 +35,7 @@ class OrderService:
     @staticmethod
     @sharding_target
     def create_order(user_id: int, data: dict) -> None:
-        serializer = OrderRequestSerializer(data=data)
+        serializer = OrderCreateSerializer(data=data)
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -53,7 +53,7 @@ class OrderService:
                 status=status.HTTP_404_NOT_FOUND,
             )
 
-        serializer = OrderRequestSerializer(order, data=data, partial=True)
+        serializer = OrderCreateSerializer(order, data=data, partial=True)
 
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
