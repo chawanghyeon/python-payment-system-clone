@@ -72,3 +72,23 @@ class OrderReadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = "__all__"
+
+
+class OrderUpdateSerializer(serializers.ModelSerializer):
+    order_pay_method = OrderPayMethodCreateSerializer(required=False)
+    order_memo = OrderMemoCreateSerializer(required=False)
+    delivery = DeliveryCreateSerializer(required=False)
+    line_items = LineItemCreateSerializer(many=True, required=False)
+    seller_summary = SellerSummaryCreateSerializer(required=False)
+    charge_lines = ChargeLineCreateSerializer(many=True, required=False)
+
+    class Meta:
+        model = Order
+        fields = (
+            "order_pay_method",
+            "order_memo",
+            "delivery",
+            "line_items",
+            "seller_summary",
+            "charge_lines",
+        )

@@ -4,6 +4,7 @@ from project.payments.utils.sharding_target_decorator import sharding_target
 from project.payments.serializers.order import (
     OrderCreateSerializer,
     OrderReadSerializer,
+    OrderUpdateSerializer,
 )
 from rest_framework import status
 from rest_framework.response import Response
@@ -53,7 +54,7 @@ class OrderService:
                 status=status.HTTP_404_NOT_FOUND,
             )
 
-        serializer = OrderCreateSerializer(order, data=data, partial=True)
+        serializer = OrderUpdateSerializer(order, data=data, partial=True)
 
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

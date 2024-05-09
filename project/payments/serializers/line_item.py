@@ -4,7 +4,7 @@ from project.payments.serializers.line_item_option import LineItemOptionCreateSe
 
 
 class LineItemCreateSerializer(serializers.ModelSerializer):
-    line_item_options = LineItemOptionCreateSerializer(many=True)
+    line_item_options = LineItemOptionCreateSerializer(many=True, required=False)
 
     class Meta:
         model = LineItem
