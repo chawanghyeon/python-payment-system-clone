@@ -11,10 +11,12 @@ class OrderView(APIView):
 
     def put(self, request, pk=None):
         return OrderService.update_order(
-            pk, request.data, order_no=request.data.get("order_no", "")
+            pk, request.data, order_no=request.query_params.get("order_no", "")
         )
 
     def delete(self, request, pk=None):
         return OrderService.delete_order(
-            pk, request.data.get("user_id"), order_no=request.data.get("order_no", "")
+            pk,
+            request.data.get("user_id"),
+            order_no=request.query_params.get("order_no", ""),
         )
