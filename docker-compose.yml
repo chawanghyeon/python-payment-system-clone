@@ -1,41 +1,50 @@
-version: '3.8'
 services:
   postgresql1:
-    image: postgres
+    image: postgres:15-alpine:15-alpine
     restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: db1
+      POSTGRES_DB: db
+    ports:
+      - 5432:5432
 
   postgresql2:
-    image: postgres
+    image: postgres:15-alpine
     restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: db2
+      POSTGRES_DB: db
+    ports:
+      - 5433:5432
 
   postgresql3:
-    image: postgres
+    image: postgres:15-alpine
     restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: db3
+      POSTGRES_DB: db
+    ports:
+      - 5434:5432
 
   postgresql4:
-    image: postgres
+    image: postgres:15-alpine
     restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: db4
+      POSTGRES_DB: db
+    ports:
+      - 5435:5432
 
   mongodb:
-    image: mongo
+    image: mongodb/mongodb-community-server:6.0-ubuntu2004
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: password
-      MONGO_INITDB_DATABASE: mydb
+      MONGO_INITDB_DATABASE: db
+    ports:
+      - 27017:27017
