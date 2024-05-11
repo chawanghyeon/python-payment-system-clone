@@ -1,6 +1,6 @@
 services:
   postgresql1:
-    image: postgres:15-alpine:15-alpine
+    image: postgres:15-alpine
     restart: always
     environment:
       POSTGRES_USER: postgres
@@ -40,7 +40,7 @@ services:
       - 5435:5432
 
   mongodb:
-    image: mongodb/mongodb-community-server:6.0-ubuntu2004
+    image: mongodb/mongodb-community-server:6.0-ubuntu2204
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
