@@ -48,7 +48,7 @@ INTERNAL_IPS = ["127.0.0.1"]
 # Application definition
 
 INSTALLED_APPS = [
-    "project.payments.core.apps.PaymentsConfig",
+    "project.payments.core.apps",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -98,7 +98,7 @@ WSGI_APPLICATION = "project.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    "shard_0": {
+    "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "db",
         "USER": "postgres",
@@ -106,7 +106,7 @@ DATABASES = {
         "HOST": "localhost",
         "PORT": "5432",
     },
-    "shard_1": {
+    "shard_0": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "db",
         "USER": "postgres",
@@ -114,7 +114,7 @@ DATABASES = {
         "HOST": "localhost",
         "PORT": "5433",
     },
-    "shard_2": {
+    "shard_1": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "db",
         "USER": "postgres",
@@ -122,7 +122,7 @@ DATABASES = {
         "HOST": "localhost",
         "PORT": "5434",
     },
-    "shard_3": {
+    "shard_2": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "db",
         "USER": "postgres",

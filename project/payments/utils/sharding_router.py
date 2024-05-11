@@ -19,5 +19,4 @@ class ShardingRouter:
         return self.db_for_read(obj1) == self.db_for_read(obj2)
 
     def allow_migrate(self, db, app_label, model_name=None, **hints):
-        # Allow migrations only for the corresponding shard database
-        return db.startswith("shard_")
+        return True
