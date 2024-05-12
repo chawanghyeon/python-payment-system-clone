@@ -1,12 +1,9 @@
 from django.db import models
 
-from project.payments.models.seller_summary import SellerSummary
-from project.payments.models.charge_line import ChargeLine
-from project.payments.models.order_pay_method import OrderPayMethod
-from project.payments.models.order_memo import OrderMemo
-from project.payments.models.order_status_history import OrderStatusHistory
 from project.payments.models.delivery import Delivery
-from project.payments.models.line_item import LineItem
+from project.payments.models.order_memo import OrderMemo
+from project.payments.models.order_pay_method import OrderPayMethod
+from project.payments.models.seller_summary import SellerSummary
 
 
 class Order(models.Model):

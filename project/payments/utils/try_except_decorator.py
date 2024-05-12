@@ -1,17 +1,15 @@
 from functools import wraps
 from typing import Any
 
-from rest_framework.response import Response
 from rest_framework import status
-
+from rest_framework.exceptions import ValidationError
+from rest_framework.response import Response
 
 from project.payments.models.order import Order
-from rest_framework.exceptions import ValidationError
-
 from project.payments.utils.sharding_context_holder import ShardingContextHolder
 
 
-def try_except(func: Any) -> Any:
+def try_except(func: Any) -> Any:  # noqa
     @wraps(func)
     def wrapper(*args: Any, **kwargs: Any) -> None:
         try:

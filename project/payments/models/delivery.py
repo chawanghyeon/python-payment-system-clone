@@ -1,6 +1,5 @@
 from django.db import models
 
-
 DELIVERY_STATUS = [
     ("Pending", "Pending"),
     ("Preparing", "Preparing"),

@@ -1,5 +1,8 @@
-from typing_extensions import override
+from typing import Any
+
+from django.db import transaction
 from rest_framework import serializers
+
 from project.payments.models.charge_line import ChargeLine
 from project.payments.models.delivery import Delivery
 from project.payments.models.line_item import LineItem
@@ -14,7 +17,6 @@ from project.payments.serializers.line_item import LineItemCreateSerializer
 from project.payments.serializers.order_memo import OrderMemoCreateSerializer
 from project.payments.serializers.order_pay_method import OrderPayMethodCreateSerializer
 from project.payments.serializers.seller_summary import SellerSummaryCreateSerializer
-from django.db import transaction
 
 
 class OrderCreateSerializer(serializers.ModelSerializer):
@@ -31,8 +33,7 @@ class OrderCreateSerializer(serializers.ModelSerializer):
         exclude = ("order_status_history",)
 
     @transaction.atomic
-    @override
-    def save(self, **kwargs):
+    def save(self, **kwargs: Any) -> Order:
         order_pay_method = self.validated_data.pop("order_pay_method")
         order_memo = self.validated_data.pop("order_memo")
         delivery = self.validated_data.pop("delivery")
@@ -50,7 +51,7 @@ class OrderCreateSerializer(serializers.ModelSerializer):
             order_memo=order_memo,
             delivery=delivery,
             seller_summary=seller_summary,
-            **self.validated_data
+            **self.validated_data,
         )
 
         LineItem.objects.bulk_create(

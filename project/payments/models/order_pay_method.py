@@ -1,7 +1,5 @@
 from django.db import models
 
-from project.payments.models.order import Order
-
 
 class OrderPayMethod(models.Model):
     """주문 결제 방법 모델입니다.

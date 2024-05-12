@@ -10,10 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-from datetime import timedelta
-from pathlib import Path
 import os
 import sys
+from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = str(Path(__file__).parents[2])
@@ -27,7 +26,6 @@ try:
     sys.path.append(BASE_DIR)
     from keys.secret_key import SECRET_KEY  # pylint: disable=unused-import
 except ImportError:
-
     from django.utils.crypto import get_random_string
 
     keys_dir = os.path.join(BASE_DIR, "keys")
@@ -35,8 +33,8 @@ except ImportError:
         os.mkdir(keys_dir)
     with open(os.path.join(keys_dir, "secret_key.py"), "w") as f:
         chars = "abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)"
-        f.write("SECRET_KEY = '{}'\n".format(get_random_string(50, chars)))
-    from keys.secret_key import SECRET_KEY
+        f.write(f"SECRET_KEY = '{get_random_string(50, chars)}'\n")
+    from keys.secret_key import SECRET_KEY  # noqa: F401
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -141,7 +139,7 @@ NUM_SHARDS = len(DATABASES)
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",  # noqa
     },
     {
         "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
