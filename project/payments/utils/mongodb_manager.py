@@ -15,7 +15,7 @@ class MongoDbManager:
             cls._instance = object.__new__(cls, *args, **kwargs)
         return cls._instance
 
-    def get_order(cls, user_id: int, order_no: str) -> Order:
+    def get_order(cls, user_id: int, order_no: str) -> dict[str, Any]:
         order = cls.database.find_one({"user_id": user_id, "order_no": order_no})
         if order is None:
             raise Order.DoesNotExist

@@ -36,6 +36,9 @@ target-version = ["py310"]
 [tool.isort]
 profile = "black"
 
+[tool.bandit]
+exclude_dirs = [".env", "tests", "**/tests/**"]
+
 [tool.mypy]
 strict = true
 ignore_missing_imports = true

@@ -15,5 +15,5 @@ class LineItemOption(models.Model):
     """
 
     line_item = models.ForeignKey(LineItem, on_delete=models.CASCADE)
-    option_name = models.CharField(max_length=255)
-    extra_cost = models.IntegerField()
+    name = models.CharField(max_length=255)
+    price = models.IntegerField()
