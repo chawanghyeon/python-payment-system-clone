@@ -12,7 +12,6 @@ class OrderView(APIView):
     def post(self, request: Request) -> Response:
         return OrderService.create_order(request.data)
 
-    # TODO: pk order_no으로 변경
     def put(self, request: Request, order_no: str | None = None) -> Response:
         return OrderService.update_order(order_no, request.data)
 
